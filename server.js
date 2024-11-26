@@ -469,7 +469,9 @@ app.post("/movies/admin/searchByTitle", ensureAuthenticated, ensureAdmin, async 
     }
 
     if (commonGenres && commonGenres.length > 0) {
-        searchCriteria.genres = { $in: commonGenres };
+        // Ensure commonGenres is an array
+        const genresArray = Array.isArray(commonGenres) ? commonGenres : [commonGenres];
+        searchCriteria.genres = { $in: genresArray };
     }
 
     try {
