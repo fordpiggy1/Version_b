@@ -383,7 +383,7 @@ app.get("/profile/edit", ensureAuthenticated, (req, res) => {
 
 app.get("/adminlogin", (req, res) => {
     const error = req.flash("error");
-    res.render("adminlogin", { error: null });
+    res.render("adminlogin", { error: error }); // Pass the actual error instead of null
 });
 
 app.post(
