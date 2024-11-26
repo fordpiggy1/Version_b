@@ -757,10 +757,9 @@ app.get('/search', ensureAuthenticated, (req,res) => {
     searchByPlot(req, res);
 })
 
-app.get('/admin', (req,res) => {
-    res.status(200).render('admin');
+app.get('/admin', ensureAuthenticated, ensureAdmin, (req, res) => {
+    res.status(200).render('admin-dashboard', { user: req.user, movies: [], error: null });
 })
-
 
 //API
 //Admin Create Movies
