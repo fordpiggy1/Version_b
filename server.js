@@ -1135,6 +1135,11 @@ app.post('/movies/admin/semantic-search', ensureAuthenticated, ensureAdmin, asyn
     }
 });
 
+// Informative GET handler for semantic-search route
+app.get("/movies/admin/semantic-search", ensureAuthenticated, ensureAdmin, (req, res) => {
+    res.status(405).send("Method Not Allowed. Please submit the form to perform a semantic search.");
+});
+
 const PORT = process.env.PORT || 8099;
 const server = app.listen(PORT, () => {
     console.log(`The server runs on http://localhost:${PORT}`)
