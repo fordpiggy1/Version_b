@@ -716,6 +716,38 @@ app.post("/adminprofile/edit", ensureAuthenticated, async (req, res) => {
     });
 });
 
+// Route to display admin registration form
+app.get("/admin/register", ensureAuthenticated, ensureAdmin, (req, res) => {
+    res.render("adminRegister", { error: null });
+});
+
+// Route to handle admin registration
+app.post("/admin/register", ensureAuthenticated, ensureAdmin, async (req, res) => {
+    const { email, username, password, confirmPassword } = req.body;
+
+    if (!email || !username || !password || !confirmPassword) {
+        return res.render("adminRegister", { error: "All fields are required." });
+    }
+
+    if (password !== confirmPassword) {
+        return res.render("adminRegister", { error: "Passwords do not match." });
+    }
+
+    try {
+        const existingUser = await usersCollection.findOne({ email });
+        if (existingUser) {
+            return res.render("adminRegister", { error: "Email already in use." });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await usersCollection.insertOne({ email, username, password: hashedPassword, role: "admin" });
+
+        res.redirect("/admin-dashboard");
+    } catch (error) {
+        console.error("Error creating admin account:", error);
+        res.status(500).render("adminRegister", { error: "Internal Server Error." });
+    }
+});
 
 app.get('/', (req,res) => {
     res.status(200).render('home', {user: req.user, req: req});
