@@ -143,8 +143,13 @@ const searchByPlot = async (req, res) => {
         }
 
         const userFav = await userFavoritesCollection.find({userId: req.user._id}).toArray();
-
-        res.status(200).render('resultByPlots', {movies: results, userFav: userFav[0], user: req.user, req: req, error: null});
+        res.status(200).render('resultByPlots', {
+            movies: results,
+            userFav: userFav[0] ? userFav[0] : { favorites: [] },
+            user: req.user,
+            req: req,
+            error: null
+        });
     } catch (error) {
         console.error("Error in searchByPlot:", error);
         res.render("resultByPlots", {

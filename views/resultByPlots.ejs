@@ -53,14 +53,18 @@
                             <img src="/images/default-poster.jpg" alt="Default poster" class="movie-poster">
                         <% } %>
                         <% const movieIdStr = movie._id.toString(); %>
-                        <!-- <% console.log('User Favorites: ', userFav.favorites.map(id => id.toString())); %> -->
-                        <!-- <% console.log('Movie ID: ', movieIdStr); %> -->
-                        <% if (!userFav.favorites.map(id => id.toString()).includes(movieIdStr)) { %>
-                            <form action="/favorites" method="post" class="add-to-watchlist-form">
-                                <input type="hidden" name="movieId" value="<%= movie._id %>">
-                                <button type="submit" class="add-to-watchlist-button">+</button>
-                            </form>
-                        <% } %>
+                        <!-- <% if (userFav && userFav.favorites) { %> -->
+                            <!-- <% console.log('User Favorites: ', userFav.favorites.map(id => id.toString())); %> -->
+                            <!-- <% console.log('Movie ID: ', movieIdStr); %> -->
+                            <% if (!userFav.favorites.map(id => id.toString()).includes(movieIdStr)) { %>
+                                <form action="/favorites" method="post" class="add-to-watchlist-form">
+                                    <input type="hidden" name="movieId" value="<%= movie._id %>">
+                                    <button type="submit" class="add-to-watchlist-button">+</button>
+                                </form>
+                            <% } %>
+                        <!-- <% } else { %> -->
+                            <!-- <p>No favorites found.</p> -->
+                        <!-- <% } %> -->
                     </div>
                     <div class="movie-details">
                         <h2 class="movie-title"><%= movie.title %></h2>
