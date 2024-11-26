@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.top-bar {
+    background-color: #f8f9fa;
+    color: #333;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensure space between logo and links */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure top bar stays on top */
+}
+
+.logo {
+    height: 40px;
+}
+
+.search-form {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin-right: auto; /* Ensure search form takes up available space */
+}
+
+.search-bar {
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    width: 60%;
+}
+
+.top-bar-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Make sure links are at the right end */
+    flex: 1; /* Take remaining space */
+    margin-right: 20px;
+}
+
+.top-bar-link {
+    color: #333;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 60px; /* Add top margin to avoid overlap with fixed top bar */
+}
+
+.movie-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative; /* Ensure button stays within the poster */
+}
+
+.movie-poster {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 20px;
+    position: relative; /* Ensure button stays within the poster */
+}
+
+.movie-details {
+    flex: 1;
+}
+
+.movie-title {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.movie-year, .movie-cast {
+    margin: 5px 0;
+    color: #555;
+}
+
+.movie-plot {
+    margin-top: 10px;
+    color: #333;
+}
+
+.poster-container {
+    position: relative;
+    display: inline-block;
+}
+
+.add-to-watchlist-form {
+    position: absolute;
+    top: 10px;
+    right: 10px; /* Keep the button at the top right */
+}
+
+.add-to-watchlist-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px; /* Adjust padding to better fit within the poster */
+    border-radius: 5px; /* Square shape with slight rounding */
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.add-to-watchlist-button:hover {
+    background-color: #0056b3;
+}

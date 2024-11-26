@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Moodle: An AI Movie Search Engine</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+        }
+        .top-bar {
+            width: 100%;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .top-bar .links {
+            display: flex;
+            align-items: center;
+        }
+        .top-bar .links a {
+            color: #333;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 80px;
+        }
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="text"] {
+            width: 400px;
+            padding: 12px;
+            font-size: 18px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            outline: none;
+        }
+        input[type="submit"] {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #4285f4;
+            border: none;
+            border-radius: 24px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #357ae8;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var query = document.forms["searchForm"]["queryStr"].value;
+            if (query === "") {
+                alert("Please enter a movie plot.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="links">
+            <a href="/user/favorites">My Watch List</a>
+            <% console.log(user); %>
+            <% if (user && req.isAuthenticated()) { %>
+                <a href="/profile/edit">My Account</a>
+                <a href="/logout">Sign Out</a>
+            <% } else { %>
+                <a href="/login">Sign In</a>
+            <% } %>
+        </div>
+    </div>
+    <div class="logo-container">
+        <img src="/images/logo.png" alt="Logo" class="logo">
+    </div>
+    <div class="search-container">
+        <form name="searchForm" action="/search" method="get" onsubmit="return validateForm()">
+            <input type="text" name="queryStr" placeholder="Enter anything about the plot of a movie...">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+</body>
+</html>

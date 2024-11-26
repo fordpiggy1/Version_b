@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search Results</title>
+    <link rel="stylesheet" href="css/searchResults.css">
+    <script>
+        function validateSearchForm() {
+            var query = document.forms["searchForm"]["queryStr"].value;
+            if (query === "") {
+                alert("Please enter a movie plot.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="/"><img src="images/logo.png" alt="My Logo" class="logo"></a>
+        <form name="searchForm" action="/search" method="get" class="search-form" onsubmit="return validateSearchForm()">
+            <input type="text" name="queryStr" placeholder="Search for movies..." class="search-bar">
+        </form>
+        <div class="top-bar-links links">
+            <a href="/user/favorites" class="top-bar-link">My Watch List</a>
+            <% if (user && req.isAuthenticated()) { %>
+                <a href="/profile/edit" class="top-bar-link">My Account</a>
+                <a href="/logout" class="top-bar-link">Sign Out</a>
+            <% } else { %>
+                <a href="/login" class="top-bar-link">Sign In</a>
+            <% } %>
+        </div>
+    </div>
+    <div class="container">
+        <% if (movies && movies.length > 0) { %>
+            <% movies.forEach(movie => { %>
+                <div class="movie-item">
+                    <div class="poster-container">
+                        <% if (movie.poster) { %>
+                            <% const posterUrl = movie.poster.replace(/["']/g, ""); %>
+                            <img src="<%= posterUrl %>" alt="<%= movie.title %> poster" class="movie-poster">
+                        <% } else { %>
+                            <img src="/images/default-poster.jpg" alt="Default poster" class="movie-poster">
+                        <% } %>
+                        <% const movieIdStr = movie._id.toString(); %>
+                        <!-- <% console.log('User Favorites: ', userFav.favorites.map(id => id.toString())); %> -->
+                        <!-- <% console.log('Movie ID: ', movieIdStr); %> -->
+                        <% if (!userFav.favorites.map(id => id.toString()).includes(movieIdStr)) { %>
+                            <form action="/favorites" method="post" class="add-to-watchlist-form">
+                                <input type="hidden" name="movieId" value="<%= movie._id %>">
+                                <button type="submit" class="add-to-watchlist-button">+</button>
+                            </form>
+                        <% } %>
+                    </div>
+                    <div class="movie-details">
+                        <h2 class="movie-title"><%= movie.title %></h2>
+                        <p class="movie-year"><%= movie.year %></p>
+                        <p class="movie-cast"><%= movie.cast.join(', ') %></p>
+                        <p class="movie-plot"><%= movie.plot %></p>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else if (error) { %>
+            <p class="error-message"><%= error %></p>
+        <% } %>
+    </div>
+</body>
+</html>

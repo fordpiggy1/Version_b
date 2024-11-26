@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Watch List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .top-bar {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Ensure space between logo and links */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* Ensure top bar stays on top */
+        }
+        .logo {
+            height: 40px;
+        }
+        .search-form {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            margin-right: auto; /* Ensure search form takes up available space */
+        }
+        .search-bar {
+            padding: 5px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            width: 60%;
+        }
+        .top-bar-links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Make sure links are at the right end */
+            flex: 1; /* Take remaining space */
+            margin-right: 20px;
+        }
+        .top-bar-link {
+            color: #333;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .top-bar-link.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        .favorites-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            margin-top: 60px; /* Add top margin to avoid overlap with fixed top bar */
+        }
+        .movie-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; /* Ensure button stays within the poster */
+        }
+        .movie-poster {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 20px;
+            position: relative; /* Ensure button stays within the poster */
+        }
+        .movie-details {
+            flex: 1;
+        }
+        .movie-title {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .movie-year, .movie-cast {
+            margin: 5px 0;
+            color: #555;
+        }
+        .movie-plot {
+            margin-top: 10px;
+            color: #333;
+        }
+        .delete-btn-container form {
+            margin: 0;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        .no-favorites {
+            text-align: center;
+            font-size: 18px;
+            color: #777;
+        }
+        .back-btn {
+            display: block;
+            width: 180px; /* Adjusted width to ensure text fits in one line */
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #4285f4;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            position: relative;
+        }
+        .back-btn:hover {
+            background-color: #357ae8;
+        }
+    </style>
+    <script>
+        function validateSearchForm() {
+            var query = document.forms["searchForm"]["queryStr"].value;
+            if (query === "") {
+                alert("Please enter a movie plot.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <a href="/"><img src="/images/logo.png" alt="My Logo" class="logo"></a>
+        <form name="searchForm" action="/search" method="get" class="search-form" onsubmit="return validateSearchForm()">
+            <input type="text" name="queryStr" placeholder="Search for movies..." class="search-bar">
+        </form>
+        <div class="top-bar-links links">
+            <a href="#" class="top-bar-link disabled">My Watch List</a>
+            <% if (user && req.isAuthenticated()) { %>
+                <a href="/profile/edit" class="top-bar-link">My Account</a>
+                <a href="/logout" class="top-bar-link">Sign Out</a>
+            <% } else { %>
+                <a href="/login" class="top-bar-link">Sign In</a>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="favorites-container">
+        <% if (favorites && favorites.length > 0) { %>
+            <% favorites.forEach(movie => { %>
+                <div class="movie-item">
+                    <div class="poster-container">
+                        <% if (movie.poster) { %>
+                            <img src="<%= movie.poster %>" alt="<%= movie.title %> poster" class="movie-poster">
+                        <% } else { %>
+                            <img src="/images/default-poster.jpg" alt="Default poster" class="movie-poster">
+                        <% } %>
+                    </div>
+                    <div class="movie-details">
+                        <h2 class="movie-title"><%= movie.title %></h2>
+                        <p class="movie-year"><%= movie.year %></p>
+                        <p class="movie-cast"><%= movie.cast.join(', ') %></p>
+                        <p class="movie-plot"><%= movie.plot %></p>
+                    </div>
+                    <div class="delete-btn-container">
+                        <form action="/favorites/<%= movie._id %>?action=delete" method="POST">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p class="no-favorites">No movie in watch list yet.</p>
+        <% } %>
+    </main>
+
+    <!-- Back Button -->
+    <a href="/" class="back-btn">Home</a>
+</body>
+</html>

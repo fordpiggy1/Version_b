@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Movie</title>
+    <link rel="stylesheet" href="/editMovie.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <h1>Edit Movie</h1>
+        </header>
+
+        <!-- Edit Movie Form -->
+        <form action="/movies/edit/<%= movie._id %>?action=edit" method="POST" class="edit-form">
+            <!-- Title Field -->
+            <label for="title">Title</label>
+            <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Enter the movie title"
+                value="<%= movie.title %>"
+                required
+            >
+
+            <!-- Plot Field -->
+            <label for="plot">Plot</label>
+            <textarea
+                id="plot"
+                name="plot"
+                placeholder="Enter the movie plot"
+                required
+            ><%= movie.plot %></textarea>
+
+            <!-- Genres Field -->
+            <label for="genres">Genres (comma separated)</label>
+            <input
+                type="text"
+                id="genres"
+                name="genres"
+                placeholder="Enter the movie genres"
+                value="<%= movie.genres ? movie.genres.join(', ') : '' %>"
+            >
+
+            <!-- Common Genres Field -->
+            <label for="commonGenres">Common Genres</label>
+            <select id="commonGenres" name="commonGenres" multiple>
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Drama">Drama</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Horror">Horror</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Romance">Romance</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Western">Western</option>
+            </select>
+
+            <!-- Director Field -->
+            <label for="director">Director</label>
+            <input
+                type="text"
+                id="director"
+                name="director"
+                placeholder="Enter the director's name"
+                value="<%= movie.director %>"
+            >
+
+            <!-- Release Date Field -->
+            <label for="releaseDate">Release Date</label>
+            <input
+                type="date"
+                id="releaseDate"
+                name="releaseDate"
+                value="<%= movie.releaseDate ? movie.releaseDate.toISOString().split('T')[0] : '' %>"
+            >
+
+            <!-- Runtime Field -->
+            <label for="runtime">Runtime (minutes)</label>
+            <input
+                type="number"
+                id="runtime"
+                name="runtime"
+                placeholder="Enter the runtime in minutes"
+                value="<%= movie.runtime %>"
+            >
+
+            <!-- Poster URL Field -->
+            <label for="poster">Poster URL</label>
+            <input
+                type="url"
+                id="poster"
+                name="poster"
+                placeholder="Enter the poster URL"
+                value="<%= movie.poster %>"
+            >
+
+            <!-- Save Changes Button -->
+            <button type="submit" class="save-btn">Save Changes</button>
+        </form>
+
+        <!-- Back Button -->
+        <a href="/admin-dashboard" class="back-btn">Back</a>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>@ website built by <strong>21 Black Iron Generation</strong></p>
+    </footer>
+</body>
+</html>

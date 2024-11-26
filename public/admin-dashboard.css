@@ -1,0 +1,165 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; 
+    color: #000; 
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Header Section */
+header {
+    background-color: #ffffff;
+    color: #000; 
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-container h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Action Buttons */
+.logout-btn, .dashboard-btn1, .dashboard-btn2 {
+    position: absolute;
+    background-color: #ffffff; 
+    color: #000;
+    padding: 10px 25px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn {
+    top: 10px;
+    right: 10px;
+}
+
+.dashboard-btn1 {
+    top: 70px;
+    right: 10px;
+}
+
+.dashboard-btn2 {
+    top: 130px;
+    right: 10px;
+}
+
+.logout-btn:hover, .dashboard-btn1:hover, .dashboard-btn2:hover {
+    background-color: #f0f0f0; 
+    border: 1px solid #000;
+}
+
+/* Search Section */
+.logo {
+    margin-bottom: 20px;
+    width: 80%;
+    max-width: 400px;
+    height: auto;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="text"] {
+    width: 400px;
+    padding: 12px;
+    font-size: 18px;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    outline: none;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 18px;
+    color: #000; 
+    background-color: #ffffff; 
+    border: 1px solid #ccc;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #f0f0f0;
+}
+
+/* Results Section */
+.results-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff; 
+    color: #000;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-item .movie-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.result-item .movie-info p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.btn-container {
+    display: flex; /* Use flexbox for horizontal alignment */
+    gap: 10px; /* Add spacing between buttons */
+    justify-content: flex-end; /* Align buttons to the right */
+    align-items: center; /* Align buttons vertically in the center */
+}
+
+/* Keep individual button styles */
+.btn-container .edit-btn,
+.btn-container .delete-btn,
+.save-btn {
+    background-color: #185adb;
+    color: #000;
+    padding: 10px 25px; /* Ensure all buttons have the same size */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-container .edit-btn:hover,
+.btn-container .delete-btn:hover,
+.save-btn:hover {
+    background-color: #ffffff;
+}
+
+/* Footer Section */
+footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f5f5f5; /* Match the overall background color */
+    color: #000; /* Change text color to black */
+    font-size: 0.8rem;
+}

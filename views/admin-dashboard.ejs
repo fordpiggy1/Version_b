@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/admin-dashboard.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <h1>Welcome to Admin Dashboard</h1>
+        </div>
+    </header>
+
+    <!-- Action Buttons -->
+    <a href="/logout" class="logout-btn">Logout</a>
+    <a href="/movies/add" class="dashboard-btn1">AddMovie</a>
+    <a href="/adminprofile/edit" class="dashboard-btn2">Profile</a>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Search Section -->
+        <div class="search-container">
+            <img src="/images/logo.png" alt="Logo" class="logo">
+            <form action="/movies/admin/searchByTitle" method="POST">
+                <input type="text" name="query" placeholder="Enter the movie title..." required>
+                <select name="searchType">
+                    <option value="title">Title</option>
+                    <option value="genre">Genre</option>
+                </select>
+                <!-- Common Genres Field -->
+                <label for="commonGenres">Common Genres</label>
+                <select id="commonGenres" name="commonGenres" multiple>
+                    <option value="Action">Action</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Mystery">Mystery</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Thriller">Thriller</option>
+                    <option value="Western">Western</option>
+                </select>
+                <input type="submit" value="Search">
+            </form>
+
+            <!-- 修改表单以支持多参数查询 -->
+            <form action="/movies/admin/multi-search" method="POST">
+                <input type="text" name="title" placeholder="Enter movie title">
+                <input type="text" name="director" placeholder="Enter director name">
+                <input type="text" name="genre" placeholder="Enter genres (comma separated)">
+                <input type="submit" value="Search">
+            </form>
+
+            <!-- 添加语义搜索表单 -->
+            <form action="/movies/admin/semantic-search" method="POST">
+                <input type="text" name="plotQuery" placeholder="Enter plot description for semantic search" required>
+                <input type="submit" value="Semantic Search">
+            </form>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-container">
+            <% if (movies && movies.length > 0) { %>
+                <% movies.forEach(movie => { %>
+                    <div class="result-item">
+                        <!-- Movie Information -->
+                        <div class="movie-info">
+                            <h3><%= movie.title %></h3>
+                            <p><%= movie.plot %></p>
+                            <% if (movie.genres) { %>
+                                <p><strong>Genres:</strong> <%= movie.genres.join(', ') %></p>
+                            <% } %>
+                            <% if (movie.director) { %>
+                                <p><strong>Director:</strong> <%= movie.director %></p>
+                            <% } %>
+                            <% if (movie.releaseDate) { %>
+                                <p><strong>Release Date:</strong> <%= movie.releaseDate.toDateString() %></p>
+                            <% } %>
+                            <% if (movie.runtime) { %>
+                                <p><strong>Runtime:</strong> <%= movie.runtime %> minutes</p>
+                            <% } %>
+                            <% if (movie.poster) { %>
+                                <img src="<%= movie.poster %>" alt="<%= movie.title %> Poster">
+                            <% } %>
+                        </div>
+
+                        <!-- Edit and Delete Buttons -->
+                        <div class="btn-container">
+                            <!-- Edit Button -->
+                            <a href="/movies/edit/<%= movie._id %>" class="edit-btn">Edit</a>
+                            <!-- Delete Button -->
+                            <form action="/movies/<%= movie._id %>?action=delete" method="POST">
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else if (error) { %>
+                <!-- Error Message -->
+                <p class="error-message"><%= error %></p>
+            <% } %>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© website built by <strong>21 Black Iron Generation</strong></p>
+    </footer>
+</body>
+</html>

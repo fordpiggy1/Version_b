@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search Results</title>
+    <link rel="stylesheet" href="/movieSearch.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <h1>Movie Search Results</h1>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <div class="search-container">
+        <form action="/movies/search" method="POST">
+            <input type="text" name="title" placeholder="Enter movie title">
+            <input type="text" name="director" placeholder="Enter director name">
+            <input type="text" name="genre" placeholder="Enter genres (comma separated)">
+            <input type="text" name="plotQuery" placeholder="Enter plot description for semantic search">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Results Section -->
+        <div class="results-container">
+            <% if (movies && movies.length > 0) { %>
+                <% movies.forEach(movie => { %>
+                    <div class="result-item">
+                        <!-- Movie Poster -->
+                        <div class="movie-poster">
+                            <img src="<%= movie.poster %>" alt="<%= movie.title %> Poster">
+                        </div>
+                        <!-- Movie Information -->
+                        <div class="movie-info">
+                            <h3><%= movie.title %></h3>
+                            <p><%= movie.plot %></p>
+                            <% if (movie.genres) { %>
+                                <p><strong>Genres:</strong> <%= movie.genres.join(', ') %></p>
+                            <% } %>
+                            <% if (movie.runtime) { %>
+                                <p><strong>Runtime:</strong> <%= movie.runtime %> minutes</p>
+                            <% } %>
+                            <% if (movie.cast) { %>
+                                <p><strong>Cast:</strong> <%= movie.cast.join(', ') %></p>
+                            <% } %>
+                            <% if (movie.directors) { %>
+                                <p><strong>Director:</strong> <%= movie.directors.join(', ') %></p>
+                            <% } %>
+                            <% if (movie.imdb && movie.imdb.rating) { %>
+                                <p><strong>Rating:</strong> <%= movie.imdb.rating %> / 10</p>
+                            <% } %>
+                            <% if (movie.year) { %>
+                                <p><strong>Year:</strong> <%= movie.year %></p>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else if (error) { %>
+                <!-- Error Message -->
+                <p class="error-message"><%= error %></p>
+            <% } %>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>@ website built by <strong>21 Black Iron Generation</strong></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/editProfile.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <h1>Edit Profile</h1>
+        </header>
+
+        <!-- Edit Profile Form -->
+        <form action="/adminprofile/edit" method="POST" class="edit-form">
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter new username"
+                    value="<%= user.username %>"
+                >
+            </div>
+
+            <!-- Current Password Field -->
+            <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input
+                    type="password"
+                    id="currentPassword"
+                    name="currentPassword"
+                    placeholder="Enter current password"
+                    required
+                >
+            </div>
+
+            <!-- New Password Field -->
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input
+                    type="password"
+                    id="newPassword"
+                    name="newPassword"
+                    placeholder="Enter new password"
+                >
+            </div>
+
+            <!-- Confirm New Password Field -->
+            <div class="form-group">
+                <label for="confirmNewPassword">Confirm New Password</label>
+                <input
+                    type="password"
+                    id="confirmNewPassword"
+                    name="confirmNewPassword"
+                    placeholder="Confirm new password"
+                >
+            </div>
+
+            <!-- Error Message -->
+            <% if (error) { %>
+                <div class="error-message"><%= error %></div>
+            <% } %>
+
+            <!-- Save Changes Button -->
+            <button type="submit" class="save-btn">Save Changes</button>
+        </form>
+
+        <!-- Back Button -->
+        <a href="/admin-dashboard" class="back-btn">Back</a>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>@ website built by <strong>21 Black Iron Generation</strong></p>
+    </footer>
+</body>
+</html>
