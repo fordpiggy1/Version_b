@@ -103,46 +103,47 @@ const ensureAdmin = (req, res, next) => {
 };
 
 // Handler functions 
+// Modify the searchByPlot function to handle searchType
 const searchByPlot = async (req, res) => {
     try {
-        // Connect to the MongoDB client
-        // await movieClient.connect();
+        const { queryStr, searchType } = req.query;
 
-        // // Specify the database and collection
+        if (!queryStr || !searchType) {
+            return res.render("resultByPlots", {
+                movies: [],
+                userFav: [], 
+                user: req.user, 
+                req: req,
+                error: "Search query and search type are required.",
+            });
+        }
+
         const db = movieClient.db("sample_mflix");
         const collection = db.collection("movies");
 
-        // Generate embedding for the search query
-        const queryEmbedding = await getEmbedding(req.query.queryStr);
+        let searchCriteria = {};
+        if (searchType === "title") {
+            searchCriteria = { title: { $regex: queryStr, $options: "i" } };
+        } else if (searchType === "genre") {
+            searchCriteria = { genres: { $regex: queryStr, $options: "i" } };
+        } else {
+            return res.render("resultByPlots", {
+                movies: [],
+                userFav: [], 
+                user: req.user, 
+                req: req,
+                error: "Invalid search type selected.",
+            });
+        }
 
-        // Define the sample vector search pipeline
-        const pipeline = [
-            {
-                $vectorSearch: {
-                    index: "vector_index",
-                    queryVector: queryEmbedding,
-                    path: "embedding",
-                    exact: true,
-                    limit: 10
-                }
-            },
-            {
-                $project: {
-                    embedding: 0,
-                    score: {
-                        $meta: "vectorSearchScore"
-                    }
-                }
-            }
-        ];
-
-        // run pipeline
-        const results = await collection.aggregate(pipeline).toArray();
+        // Generate embedding for the search query if needed
+        let results = [];
+        if (searchType === "title" || searchType === "genre") {
+            results = await collection.find(searchCriteria).toArray();
+        }
 
         const userFav = await userFavoritesCollection.find({userId: req.user._id}).toArray();
-        // console.log(userFav);
 
-        // send results
         res.status(200).render('resultByPlots', {movies: results, userFav: userFav[0], user: req.user, req: req, error: null});
     } catch (error) {
         console.error("Error in searchByPlot:", error);
@@ -152,7 +153,7 @@ const searchByPlot = async (req, res) => {
             user: req.user, 
             req: req,
             error: "An error occurred while searching for movies.",
-        })
+        });
     }
 }
 

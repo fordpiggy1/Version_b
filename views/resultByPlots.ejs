@@ -21,6 +21,15 @@
         <a href="/"><img src="images/logo.png" alt="My Logo" class="logo"></a>
         <form name="searchForm" action="/search" method="get" class="search-form" onsubmit="return validateSearchForm()">
             <input type="text" name="queryStr" placeholder="Search for movies..." class="search-bar">
+            
+            <!-- Dropdown for selecting search type -->
+            <select name="searchType" required>
+                <option value="">Select Search Type</option>
+                <option value="title">Search by Title</option>
+                <option value="genre">Search by Genre</option>
+            </select>
+            
+            <input type="submit" value="Search">
         </form>
         <div class="top-bar-links links">
             <a href="/user/favorites" class="top-bar-link">My Watch List</a>
