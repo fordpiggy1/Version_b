@@ -69,7 +69,11 @@
                     <div class="movie-details">
                         <h2 class="movie-title"><%= movie.title %></h2>
                         <p class="movie-year"><%= movie.year %></p>
-                        <p class="movie-cast"><%= movie.cast.join(', ') %></p>
+                        <% if (movie.cast && Array.isArray(movie.cast)) { %>
+                            <p class="movie-cast"><%= movie.cast.join(', ') %></p>
+                        <% } else { %>
+                            <p class="movie-cast">N/A</p>
+                        <% } %>
                         <p class="movie-plot"><%= movie.plot %></p>
                     </div>
                 </div>
