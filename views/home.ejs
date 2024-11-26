@@ -100,6 +100,12 @@
     <div class="search-container">
         <form name="searchForm" action="/search" method="get" onsubmit="return validateForm()">
             <input type="text" name="queryStr" placeholder="Enter anything about the plot of a movie...">
+            <select name="searchType" required>
+                <option value="" disabled selected>Select search type</option>
+                <option value="title">Title</option>
+                <option value="genre">Genre</option>
+                <!-- Add other search types as needed -->
+            </select>
             <input type="submit" value="Search">
         </form>
     </div>
