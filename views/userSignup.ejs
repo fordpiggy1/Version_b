@@ -3,31 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>Sign Up</title>
+    <style>
+        /* Similar styling to login.ejs for consistency */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .signup-box {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        .signup-box h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+        .input-box {
+            margin-bottom: 20px;
+        }
+        .input-box input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .login-link a {
+            color: #28a745;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="login-box">
-            <h2><i class="fa fa-user-plus"></i> Register</h2>
-            <form action="/register" method="POST">
-                <div class="input-box">
-                    <input type="text" name="username" placeholder="Username" required>
-                </div>
-                <div class="input-box">
-                    <input type="email" name="email" placeholder="Email" required>
-                </div>
-                <div class="input-box">
-                    <input type="password" name="password" placeholder="Password" required>
-                </div>
-                <div class="input-box">
-                    <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
-                </div>
-                <button type="submit" class="btn">CREATE ACCOUNT</button>
-            </form>
-            <p class="register-link">
-                Already have an account? <a href="/login">Login</a>
-            </p>
+    <div class="signup-box">
+        <h2>Sign Up</h2>
+        <% if (error) { %>
+            <p class="error-message"><%= error %></p>
+        <% } %>
+        <form action="/register" method="POST">
+            <div class="input-box">
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="input-box">
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="input-box">
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+            </div>
+            <button type="submit" class="submit-btn">Sign Up</button>
+        </form>
+        <div class="login-link">
+            <p>Already have an account? <a href="/login">Login</a></p>
         </div>
     </div>
 </body>

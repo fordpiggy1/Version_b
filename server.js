@@ -189,7 +189,7 @@ app.post("/register", async (req, res) => {
 // User login
 app.get("/login", (req, res) => {
     const error = req.flash("error");
-    res.render("login", { error: null });
+    res.render("login", { error: error.length > 0 ? error[0] : null });
 });
 
 app.post(
@@ -716,7 +716,7 @@ app.get('/', (req,res) => {
     res.status(200).render('home', {user: req.user, req: req});
 })
 
-app.get('/search', (req,res) => {
+app.get('/search', ensureAuthenticated, (req,res) => {
     searchByPlot(req, res);
 })
 

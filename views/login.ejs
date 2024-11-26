@@ -7,30 +7,25 @@
     <style>
         body {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: Arial, sans-serif;
             background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
             margin: 0;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
         }
         .login-box {
             background-color: #fff;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
         }
         .login-box h2 {
             margin-bottom: 20px;
             font-size: 24px;
             color: #333;
+            text-align: center;
         }
         .input-box {
             margin-bottom: 20px;
@@ -39,50 +34,57 @@
             width: 100%;
             padding: 10px;
             font-size: 16px;
-            border: 1px solid #dfe1e5;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            outline: none;
         }
-        .btn {
-            display: block;
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .submit-btn {
             width: 100%;
             padding: 10px;
-            font-size: 18px;
-            color: #fff;
-            background-color: #4285f4;
+            background-color: #007bff;
             border: none;
+            color: #fff;
+            font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
         }
-        .btn:hover {
-            background-color: #357ae8;
+        .submit-btn:hover {
+            background-color: #0056b3;
         }
-        .register-link {
-            margin-top: 20px;
+        .signup-link {
             text-align: center;
+            margin-top: 10px;
         }
-        .register-link a {
-            color: #4285f4;
+        .signup-link a {
+            color: #007bff;
             text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="login-box">
-            <h2><i class="fa fa-lock"></i> Login</h2>
-            <form action="/login" method="POST">
-                <div class="input-box">
-                    <input type="text" name="email" placeholder="Email" required>
-                </div>
-                <div class="input-box">
-                    <input type="password" name="password" placeholder="Password" required>
-                </div>
-                <button type="submit" class="btn">LOGIN</button>
-            </form>
-            <p class="register-link">
-                Not an user? <a href="/register">Create an account</a>
-            </p>
+    <div class="login-box">
+        <h2>Login</h2>
+        <% if (error) { %>
+            <p class="error-message"><%= error %></p>
+        <% } %>
+        <form action="/login" method="POST">
+            <div class="input-box">
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="submit-btn">Login</button>
+        </form>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="/register">Sign Up</a></p>
         </div>
     </div>
 </body>
